@@ -30,7 +30,7 @@ public class Cliente {
             XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
             // IMPORTANTE: Si ejecutas el cliente en otra PC, cambia 127.0.0.1
             // por la IP local del servidor.
-            config.setServerURL(new URL("http://172.31.10.27:8080/xmlrpc"));
+            config.setServerURL(new URL("http://127.0.0.1:8080/xmlrpc"));
             config.setConnectionTimeout(5000);  // Timeout de 5 segundos
             XmlRpcClient client = new XmlRpcClient();
             client.setConfig(config);

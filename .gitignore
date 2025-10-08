@@ -2,10 +2,10 @@
 session_data.ser
 
 # Build directories
-*/build/
-*/dist/
-build/
-dist/
+*/build/built-jar.properties
+*/build/classes/
+build/built-jar.properties
+build/classes/
 
 # IDE files
 nbproject/private/
