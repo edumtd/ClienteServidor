@@ -30,7 +30,7 @@ public class Cliente {
             XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
             // IMPORTANTE: Si ejecutas el cliente en otra PC, cambia 127.0.0.1
             // por la IP local del servidor.
-            config.setServerURL(new URL("http://172.31.10.27:8080/xmlrpc"));
+            config.setServerURL(new URL("http://127.0.0.1:8080/xmlrpc"));
             XmlRpcClient client = new XmlRpcClient();
             client.setConfig(config);
             
@@ -68,9 +68,8 @@ public class Cliente {
                 try {
                     Object[] params = new Object[]{clienteId};
                     client.execute("contador.cerrarSesion", params);
-                    System.out.println("\n*** Sesión cerrada correctamente ***");
                 } catch (Exception e) {
-                    // Ignorar errores al cerrar
+                    // Ignorar errores al cerrar (puede que el servidor ya no esté disponible)
                 }
             }));
 
