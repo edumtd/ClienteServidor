@@ -36,8 +36,43 @@ public class Cliente {
             
             System.out.println("Cliente '" + clienteId + "' iniciado, conectando al servidor...");
             
+            // Obtener historial de sesiones anteriores
             List<Integer> misValores = new ArrayList<>();
+            try {
+                Object[] params = new Object[]{clienteId};
+                Object historialObj = client.execute("contador.obtenerHistorial", params);
+                
+                if (historialObj instanceof Object[]) {
+                    Object[] historialArray = (Object[]) historialObj;
+                    for (Object obj : historialArray) {
+                        if (obj instanceof Integer) {
+                            misValores.add((Integer) obj);
+                        }
+                    }
+                }
+                
+                if (!misValores.isEmpty()) {
+                    System.out.println("*** RECONECTADO - Recuperando datos de sesiones anteriores ***");
+                    System.out.println("Valores obtenidos en sesiones anteriores: " + misValores.size());
+                    System.out.println("Historial completo: " + misValores);
+                    System.out.println("*** Continuando desde donde se quedó... ***\n");
+                }
+            } catch (Exception e) {
+                System.out.println("Primera conexión de este cliente.");
+            }
+            
             Random random = new Random();
+            
+            // Agregar hook para cerrar sesión cuando se termine el programa
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    Object[] params = new Object[]{clienteId};
+                    client.execute("contador.cerrarSesion", params);
+                    System.out.println("\n*** Sesión cerrada correctamente ***");
+                } catch (Exception e) {
+                    // Ignorar errores al cerrar
+                }
+            }));
 
             while (true) {
                 Object[] params = new Object[]{clienteId};
@@ -45,7 +80,7 @@ public class Cliente {
 
                 if (resultado > 0) {
                     misValores.add(resultado);
-                    System.out.println("Éxito. Nuevo valor: " + resultado);
+                    System.out.println("Éxito. Nuevo valor: " + resultado + " (Total acumulado: " + misValores.size() + ")");
                 } else if (resultado == 0) {
                     System.out.println("Turno repetido, esperando...");
                 } else if (resultado == -1) {
@@ -57,7 +92,8 @@ public class Cliente {
             }
             
             System.out.println("\n--- Registro final para '" + clienteId + "' ---");
-            System.out.println("Total de valores obtenidos: " + misValores.size());
+            System.out.println("Total de valores obtenidos (todas las sesiones): " + misValores.size());
+            System.out.println("Lista completa de valores: " + misValores);
 
         } catch (Exception e) {
             System.err.println("Error en el cliente: " + e.getMessage());

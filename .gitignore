@@ -1,0 +1,14 @@
+# Build artifacts
+build/
+dist/
+*.class
+
+# IDE files
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# OS files
+.DS_Store
+Thumbs.db
