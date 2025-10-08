@@ -11,6 +11,9 @@ public class Servidor {
             int puerto = 8080;
             System.out.println("Iniciando servidor XML-RPC en el puerto " + puerto);
 
+            // Inicializar el handler (cargar datos persistentes)
+            ContadorHandler.inicializar();
+
             WebServer webServer = new WebServer(puerto);
             XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
 

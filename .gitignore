@@ -1,0 +1,21 @@
+# Session data
+session_data.ser
+
+# Build directories
+*/build/
+*/dist/
+build/
+dist/
+
+# IDE files
+nbproject/private/
+build.xml.bak
+*.iml
+.idea/
+.vscode/
+
+# Compiled files
+*.class
+
+# Log files
+*.log
